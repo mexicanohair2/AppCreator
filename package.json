@@ -1,0 +1,19 @@
+{
+  "name": "appcreator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Package HTML apps for Android and iOS with Capacitor",
+  "scripts": {
+    "sync": "cap sync",
+    "add:android": "cap add android",
+    "add:ios": "cap add ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/ios": "^7.4.3",
+    "@capacitor/core": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3"
+  }
+}
