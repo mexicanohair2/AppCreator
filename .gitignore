@@ -1,0 +1,12 @@
+node_modules/
+dist/
+android/.gradle/
+android/build/
+android/app/build/
+ios/Pods/
+ios/build/
+*.apk
+*.aab
+*.ipa
+*.xcarchive/
+.DS_Store
