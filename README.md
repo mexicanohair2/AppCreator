@@ -1,37 +1,32 @@
 # AppCreator
 
-AppCreator builds Android and iOS app packages from one HTML/CSS/JavaScript project using Capacitor.
+AppCreator takes one HTML/CSS/JavaScript project and can:
+- publish it as a public website URL with GitHub Pages;
+- package it as an Android debug APK with Capacitor.
 
-## Add a project
+An iPhone user can open the published web version in Safari. Multiplayer works only if the game itself has online/server support; publishing a URL does not automatically add multiplayer.
 
-1. Put the website or game files in `www/`.
-2. The entry page must be `www/index.html`.
-3. Commit and push the project to the `main` branch.
+## Publish HTML as a URL
 
-## Build Android and iOS
+1. Put the complete site/game in `www/`, including images, stylesheets and scripts.
+2. Make sure the start page is `www/index.html`.
+3. Open **Actions → Publish HTML to URL → Run workflow**.
+4. When the workflow succeeds, open its deployment environment or the GitHub Pages site URL.
 
-Open **Actions → Build All Platforms → Run workflow**. When the workflow finishes, download the artifacts:
+The expected Pages address for this repository is `https://mexicanohair2.github.io/AppCreator/`. It becomes available after GitHub Pages is enabled for this repository and the first deployment succeeds. In **Settings → Pages**, set the build and deployment source to **GitHub Actions** if GitHub asks for it.
 
-- `AppCreator-Android-debug` — Android debug APK.
-- `AppCreator-iOS-unsigned-IPA` — unsigned iOS device package in IPA container format.
-- `AppCreator-iOS-simulator` — iOS Simulator app bundle.
+Pushing changes under `www/` to `main` also triggers a new deployment automatically.
 
-You can also run **Build Android APK** or **Build iOS** separately.
+## Build Android APK
 
-## Important iOS limitation
+Open **Actions → Build Android APK → Run workflow**. Download the `AppCreator-Android-debug` artifact when it finishes. This is a debug APK for testing; a release APK for distribution should be signed with a release key.
 
-The generated IPA is **unsigned**. It proves that the iOS app was compiled and packaged, but it cannot be installed on a physical iPhone as-is. Installing on a real iPhone requires a valid Apple signing identity and provisioning profile. A free Apple Personal Team is limited to personal development testing and short-lived provisioning; it is not unrestricted distribution.
+## Project structure
 
-The simulator `.app` can be used with an iOS simulator on a Mac. You do not need an iPhone to create either iOS build artifact.
+- `www/index.html` — website/game entry point.
+- `www/` — all static site assets.
+- `capacitor.config.json` and `package.json` — Android wrapper configuration.
 
-## Android
+## Limits
 
-The APK is a debug build for testing. A release APK intended for wider distribution should be signed with a release key. Keep signing keys and passwords out of the repository and chat.
-
-## Privacy and credentials
-
-Never commit Apple ID passwords, private signing keys, or certificate passwords. If device signing is configured in the future, use protected GitHub Actions secrets and get help from a trusted adult.
-
-## Technical note
-
-APK and IPA are not interchangeable formats. AppCreator compiles the same HTML project separately for Android and iOS; it does not convert an APK into an IPA.
+GitHub Pages hosts static files. It does not run a game server or provide accounts, matchmaking, or real-time multiplayer by itself. For multiplayer, the game needs a separate backend/server or a suitable realtime service. Keep API keys and private credentials out of public files and the repository.
