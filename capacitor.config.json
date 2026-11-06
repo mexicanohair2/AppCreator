@@ -1,0 +1,6 @@
+{
+  "appId": "com.mexicanohair2.appcreator",
+  "appName": "AppCreator",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
