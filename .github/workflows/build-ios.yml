@@ -1,0 +1,29 @@
+name: Build iOS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Create iOS project if missing
+        run: |
+          if [ ! -d ios ]; then npx cap add ios; fi
+          npx cap sync ios
+      - name: Build for simulator (unsigned)
+        run: |
+          xcodebuild -workspace ios/App/App.xcworkspace -scheme App -sdk iphonesimulator -configuration Debug -derivedDataPath build CODE_SIGNING_ALLOWED=NO
+      - name: Upload simulator build
+        uses: actions/upload-artifact@v4
+        with:
+          name: AppCreator-iOS-simulator
+          path: build/Build/Products/Debug-iphonesimulator/*.app
+          if-no-files-found: error
