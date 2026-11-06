@@ -1,43 +1,39 @@
 # AppCreator
 
-AppCreator packages HTML websites and games into Android APKs and iOS apps using Capacitor.
+AppCreator prepares HTML websites and games as mobile app projects using Capacitor.
 
-## What works in this starter
+## Free workflow
 
-- Android APK builds in GitHub Actions on Ubuntu.
-- iOS archive/build runs on a macOS GitHub runner.
-- The same web assets are used for both platforms.
-- A local Android build script is included for computers with Android Studio, Java and Android SDK.
+The project is designed to use free tools wherever possible. No paid Apple Developer membership or iPhone is needed to create an iOS simulator build.
 
-## Add your project
+### Add your app
 
-Put the website/game files in `www/`. The entry page must be `www/index.html`.
-Keep the existing `www/appcreator.css` and `www/appcreator.js` if you want to keep the AppCreator starter screen; replace them when adding your own app.
+1. Put the website/game files in `www/`.
+2. The entry page must be `www/index.html`.
+3. Push the changes to the `main` branch.
 
-## Cloud Android build
+### Android APK
 
-1. Push your project files into `www/`.
-2. Open **Actions → Build Android APK → Run workflow**.
-3. Download the APK from the completed workflow's Artifacts section.
+1. Open **Actions → Build Android APK**.
+2. Choose **Run workflow**.
+3. When it finishes, download the APK from **Artifacts**.
 
-The workflow builds a debug APK. It is suitable for testing; a release suitable for distribution needs a signing key and a separate release configuration.
+The current Android workflow produces a debug APK for testing. A release build for public distribution needs a signing key.
 
-## Cloud iOS build
+### Free iOS simulator build
 
-Open **Actions → Build iOS IPA → Run workflow** on a macOS runner. A distributable, signed IPA requires Apple signing assets and provisioning. Configure these GitHub Actions secrets:
+1. Open **Actions → Build iOS**.
+2. Choose **Run workflow**.
+3. When it finishes, download the `AppCreator-iOS-simulator` artifact.
 
-- `IOS_CERTIFICATE_BASE64`: base64-encoded .p12 certificate
-- `IOS_CERTIFICATE_PASSWORD`: password for the .p12
-- `IOS_PROVISION_PROFILE_BASE64`: base64-encoded provisioning profile
-- `IOS_TEAM_ID`: Apple Developer Team ID
-- `IOS_BUNDLE_ID`: app bundle identifier
+This is an unsigned iOS Simulator app bundle (`.app`), not an IPA for installing on a physical iPhone. It can be used in an iOS simulator on a Mac. The cloud build itself runs on GitHub's macOS runner; free usage is subject to GitHub Actions account limits.
 
-Without valid signing assets, the workflow can compile an unsigned Xcode build but cannot produce an installable, signed IPA. Apple Developer account access is required for normal device distribution.
+## About IPA files
 
-## Local Android build
+An IPA for installation on a physical iPhone normally needs Apple code signing and a provisioning profile. A free Apple account has limited personal-device signing options, but it does not provide unrestricted distribution. AppCreator will not ask you to buy a subscription just to prepare the free simulator build.
 
-Run `scripts/build-android.sh` on macOS/Linux after installing Java 17, Android Studio and the Android SDK. On Windows, use the equivalent Gradle tasks from Android Studio.
+Never put your Apple ID password, private signing key, or certificate password in the repository or in chat. If signing is added later, credentials must be stored as protected GitHub Actions secrets with help from a trusted adult.
 
-## Important limitation
+## Important
 
-This is a real build pipeline starter, not a universal binary converter. APK and IPA are platform-specific packages: an existing APK cannot simply be converted into an IPA, and iOS builds require Apple's toolchain (Xcode on macOS).
+APK and iOS apps are different platform builds. An APK cannot simply be converted into an IPA. iOS compilation requires Apple's Xcode toolchain on macOS.
