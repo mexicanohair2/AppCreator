@@ -1,0 +1,36 @@
+name: Publish HTML to URL
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'www/**'
+      - '.github/workflows/publish-pages.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download project
+        uses: actions/checkout@v4
+      - name: Prepare website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./www
+      - name: Publish website
+        id: deployment
+        uses: actions/deploy-pages@v4
