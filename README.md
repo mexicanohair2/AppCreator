@@ -1,39 +1,37 @@
 # AppCreator
 
-AppCreator prepares HTML websites and games as mobile app projects using Capacitor.
+AppCreator builds Android and iOS app packages from one HTML/CSS/JavaScript project using Capacitor.
 
-## Free workflow
+## Add a project
 
-The project is designed to use free tools wherever possible. No paid Apple Developer membership or iPhone is needed to create an iOS simulator build.
-
-### Add your app
-
-1. Put the website/game files in `www/`.
+1. Put the website or game files in `www/`.
 2. The entry page must be `www/index.html`.
-3. Push the changes to the `main` branch.
+3. Commit and push the project to the `main` branch.
 
-### Android APK
+## Build Android and iOS
 
-1. Open **Actions → Build Android APK**.
-2. Choose **Run workflow**.
-3. When it finishes, download the APK from **Artifacts**.
+Open **Actions → Build All Platforms → Run workflow**. When the workflow finishes, download the artifacts:
 
-The current Android workflow produces a debug APK for testing. A release build for public distribution needs a signing key.
+- `AppCreator-Android-debug` — Android debug APK.
+- `AppCreator-iOS-unsigned-IPA` — unsigned iOS device package in IPA container format.
+- `AppCreator-iOS-simulator` — iOS Simulator app bundle.
 
-### Free iOS simulator build
+You can also run **Build Android APK** or **Build iOS** separately.
 
-1. Open **Actions → Build iOS**.
-2. Choose **Run workflow**.
-3. When it finishes, download the `AppCreator-iOS-simulator` artifact.
+## Important iOS limitation
 
-This is an unsigned iOS Simulator app bundle (`.app`), not an IPA for installing on a physical iPhone. It can be used in an iOS simulator on a Mac. The cloud build itself runs on GitHub's macOS runner; free usage is subject to GitHub Actions account limits.
+The generated IPA is **unsigned**. It proves that the iOS app was compiled and packaged, but it cannot be installed on a physical iPhone as-is. Installing on a real iPhone requires a valid Apple signing identity and provisioning profile. A free Apple Personal Team is limited to personal development testing and short-lived provisioning; it is not unrestricted distribution.
 
-## About IPA files
+The simulator `.app` can be used with an iOS simulator on a Mac. You do not need an iPhone to create either iOS build artifact.
 
-An IPA for installation on a physical iPhone normally needs Apple code signing and a provisioning profile. A free Apple account has limited personal-device signing options, but it does not provide unrestricted distribution. AppCreator will not ask you to buy a subscription just to prepare the free simulator build.
+## Android
 
-Never put your Apple ID password, private signing key, or certificate password in the repository or in chat. If signing is added later, credentials must be stored as protected GitHub Actions secrets with help from a trusted adult.
+The APK is a debug build for testing. A release APK intended for wider distribution should be signed with a release key. Keep signing keys and passwords out of the repository and chat.
 
-## Important
+## Privacy and credentials
 
-APK and iOS apps are different platform builds. An APK cannot simply be converted into an IPA. iOS compilation requires Apple's Xcode toolchain on macOS.
+Never commit Apple ID passwords, private signing keys, or certificate passwords. If device signing is configured in the future, use protected GitHub Actions secrets and get help from a trusted adult.
+
+## Technical note
+
+APK and IPA are not interchangeable formats. AppCreator compiles the same HTML project separately for Android and iOS; it does not convert an APK into an IPA.
