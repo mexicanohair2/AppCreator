@@ -1,6 +1,6 @@
 {
-  "appId": "com.mexicanohair2.appcreator",
-  "appName": "AppCreator",
+  "appId": "com.mexicanohair2.calorietracker",
+  "appName": "CalorieTracker",
   "webDir": "www",
   "bundledWebRuntime": false
 }
