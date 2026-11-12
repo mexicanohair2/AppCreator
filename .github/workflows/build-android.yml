@@ -2,6 +2,16 @@ name: Build Android APK
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - 'www/**'
+      - 'capacitor.config.json'
+      - 'package.json'
+      - '.github/workflows/build-android.yml'
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -29,6 +39,7 @@ jobs:
           ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
-          name: AppCreator-Android-debug
+          name: CalorieTracker-Android-debug
           path: android/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+          retention-days: 14
